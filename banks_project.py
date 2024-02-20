@@ -58,3 +58,10 @@ functions in the correct order to complete the project. Note that this
 portion is not inside any function.'''
 
 log_progress('Preliminaries complete. Initiating ETL process')
+# log_progress('Data extraction complete. Initiating Transformation process')
+# log_progress('Data transformation complete. Initiating Loading process')
+# log_progress('Data saved to CSV file')
+# log_progress('SQL Connection initiated')
+# log_progress('Data loaded to Database as a table, Executing queries')
+# log_progress('Process Complete')
+# log_progress('Server Connection closed')
