@@ -9,6 +9,11 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 log_file = 'code_log.txt'
+url = 'https://web.archive.org/web/20230908091635/https://en.wikipedia.org/wiki/List_of_largest_banks'
+table_attribs = ["Name", "MC_USD_Billion"]
+output_csv_path = './Largest_banks_data.csv'
+db_name = 'Banks.db'
+table_name = 'Largest_banks'
 
 
 def log_progress(message):
