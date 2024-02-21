@@ -30,7 +30,19 @@ def extract(url, table_attribs):
     ''' This function aims to extract the required
     information from the website and save it to a data frame. The
     function returns the data frame for further processing. '''
-
+    page = requests.get(url).text
+    data = BeautifulSoup(page, 'html.parser')
+    df = pd.DataFrame(columns=table_attribs)
+    tables = data.find_all('tbody')  # Ensure you're using the provided table attributes
+    rows = tables[0].find_all('tr')
+    for row in rows:
+        col = row.find_all('td')
+        if len(col) != 0:  # Ensure there are at least three columns in the row
+            name = col[1].text.strip()  # Access the bank name from the second column
+            billion_dollars = col[2].text.strip()  # Access the billion-dollar value from the third column
+            data_dict = {"Name": name, "MC_USD_Billion": billion_dollars}
+            df1 = pd.DataFrame(data_dict, index=[0])
+            df = pd.concat([df, df1], ignore_index=True)
     return df
 
 
@@ -63,7 +75,8 @@ functions in the correct order to complete the project. Note that this
 portion is not inside any function.'''
 
 log_progress('Preliminaries complete. Initiating ETL process')
-# log_progress('Data extraction complete. Initiating Transformation process')
+df = extract(url, table_attribs)
+log_progress('Data extraction complete. Initiating Transformation process')
 # log_progress('Data transformation complete. Initiating Loading process')
 # log_progress('Data saved to CSV file')
 # log_progress('SQL Connection initiated')
