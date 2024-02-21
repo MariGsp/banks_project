@@ -33,11 +33,11 @@ def extract(url, table_attribs):
     page = requests.get(url).text
     data = BeautifulSoup(page, 'html.parser')
     df = pd.DataFrame(columns=table_attribs)
-    tables = data.find_all('tbody')  # Ensure you're using the provided table attributes
+    tables = data.find_all('tbody')
     rows = tables[0].find_all('tr')
     for row in rows:
         col = row.find_all('td')
-        if len(col) != 0:  # Ensure there are at least three columns in the row
+        if len(col) != 0:  # Ensure there is a column
             name = col[1].text.strip()  # Access the bank name from the second column
             billion_dollars = col[2].text.strip()  # Access the billion-dollar value from the third column
             data_dict = {"Name": name, "MC_USD_Billion": billion_dollars}
