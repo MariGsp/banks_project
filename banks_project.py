@@ -57,7 +57,7 @@ def transform(df, csv_path):
     df['MC_GBP_Billion'] = [np.round(x * exchange_rate['GBP'], 2) for x in df['MC_USD_Billion']]
     df['MC_EUR_Billion'] = [np.round(x * exchange_rate['EUR'], 2) for x in df['MC_USD_Billion']]
     df['MC_INR_Billion'] = [np.round(x * exchange_rate['INR'], 2) for x in df['MC_USD_Billion']]
-    # print(df)clear
+    # print(df)
     return df
 
 
@@ -66,9 +66,11 @@ def load_to_csv(df, output_path):
     the provided path. Function returns nothing.'''
     df.to_csv(output_path)
 
+
 def load_to_db(df, sql_connection, table_name):
     ''' This function saves the final data frame to a database
     table with the provided name. Function returns nothing.'''
+    df.to_sql(table_name, sql_connection, if_exists='replace', index=False)
 
 
 def run_query(query_statement, sql_connection):
@@ -87,11 +89,12 @@ transform(df, 'exchange_rate.csv')
 log_progress('Data transformation complete. Initiating Loading process')
 load_to_csv(df, output_csv_path)
 log_progress('Data saved to CSV file')
-
-# log_progress('SQL Connection initiated')
-
-# log_progress('Data loaded to Database as a table, Executing queries')
-
+conn = sqlite3.connect(db_name)
+log_progress('SQL Connection initiated')
+load_to_db(df, conn, table_name)
+log_progress('Data loaded to Database as a table, Executing queries')
+# query = ""
+# run_query(query, conn)
 # log_progress('Process Complete')
-
+# conn.close()
 # log_progress('Server Connection closed')
