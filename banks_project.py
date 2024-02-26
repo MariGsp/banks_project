@@ -55,8 +55,9 @@ def transform(df, csv_path):
     conversion_data = pd.read_csv(csv_path)
     exchange_rate = conversion_data.set_index('Currency').to_dict()['Rate']
     df['MC_GBP_Billion'] = [np.round(x * exchange_rate['GBP'], 2) for x in df['MC_USD_Billion']]
-    df['MC_EUR_Billion '] = [np.round(x * exchange_rate['EUR'], 2) for x in df['MC_USD_Billion']]
+    df['MC_EUR_Billion'] = [np.round(x * exchange_rate['EUR'], 2) for x in df['MC_USD_Billion']]
     df['MC_INR_Billion'] = [np.round(x * exchange_rate['INR'], 2) for x in df['MC_USD_Billion']]
+    # print(df)
     return df
 
 
@@ -83,10 +84,13 @@ log_progress('Preliminaries complete. Initiating ETL process')
 df = extract(url, table_attribs)
 log_progress('Data extraction complete. Initiating Transformation process')
 transform(df, 'exchange_rate.csv')
-
-# log_progress('Data transformation complete. Initiating Loading process')
+log_progress('Data transformation complete. Initiating Loading process')
 # log_progress('Data saved to CSV file')
+
 # log_progress('SQL Connection initiated')
+
 # log_progress('Data loaded to Database as a table, Executing queries')
+
 # log_progress('Process Complete')
+
 # log_progress('Server Connection closed')
