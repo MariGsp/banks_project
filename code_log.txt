@@ -1,26 +1,8 @@
-2024-02-26-16:49:18: Preliminaries complete. Initiating ETL process
-2024-02-26-16:49:26: Data extraction complete. Initiating Transformation process
-2024-02-26-16:49:26: Data transformation complete. Initiating Loading process
-2024-02-26-16:49:26: Data saved to CSV file
-2024-02-26-16:49:26: SQL Connection initiated
-2024-02-26-16:51:34: Preliminaries complete. Initiating ETL process
-2024-02-26-16:51:35: Data extraction complete. Initiating Transformation process
-2024-02-26-16:51:35: Data transformation complete. Initiating Loading process
-2024-02-26-16:51:35: Data saved to CSV file
-2024-02-26-16:51:35: SQL Connection initiated
-2024-02-26-16:52:30: Preliminaries complete. Initiating ETL process
-2024-02-26-16:52:32: Data extraction complete. Initiating Transformation process
-2024-02-26-16:52:32: Data transformation complete. Initiating Loading process
-2024-02-26-16:52:32: Data saved to CSV file
-2024-02-26-16:52:32: SQL Connection initiated
-2024-02-26-16:54:44: Preliminaries complete. Initiating ETL process
-2024-02-26-16:54:51: Data extraction complete. Initiating Transformation process
-2024-02-26-16:54:51: Data transformation complete. Initiating Loading process
-2024-02-26-16:54:51: Data saved to CSV file
-2024-02-26-16:54:51: SQL Connection initiated
-2024-02-26-16:55:14: Preliminaries complete. Initiating ETL process
-2024-02-26-16:55:15: Data extraction complete. Initiating Transformation process
-2024-02-26-16:55:15: Data transformation complete. Initiating Loading process
-2024-02-26-16:55:15: Data saved to CSV file
-2024-02-26-16:55:15: SQL Connection initiated
-2024-02-26-16:55:15: Data loaded to Database as a table, Executing queries
+2024-02-26-17:19:38: Preliminaries complete. Initiating ETL process
+2024-02-26-17:19:51: Data extraction complete. Initiating Transformation process
+2024-02-26-17:19:51: Data transformation complete. Initiating Loading process
+2024-02-26-17:19:51: Data saved to CSV file
+2024-02-26-17:19:51: SQL Connection initiated
+2024-02-26-17:19:51: Data loaded to Database as a table, Executing queries
+2024-02-26-17:19:52: Process Complete
+2024-02-26-17:19:52: Server Connection closed

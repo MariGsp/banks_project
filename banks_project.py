@@ -9,12 +9,19 @@ import numpy as np
 from bs4 import BeautifulSoup
 from datetime import datetime
 
+# Initialised items
 log_file = 'code_log.txt'
 url = 'https://web.archive.org/web/20230908091635/https://en.wikipedia.org/wiki/List_of_largest_banks'
 table_attribs = ["Name", "MC_USD_Billion"]
 output_csv_path = './Largest_banks_data.csv'
 db_name = 'Banks.db'
 table_name = 'Largest_banks'
+
+# SQL queries
+query_1 = "SELECT * FROM Largest_banks"  # Print the contents of the entire table
+query_2 = "SELECT AVG(MC_GBP_Billion) FROM Largest_banks"  # Print the average market capitalization of all the banks
+# in Billion USD.
+query_3 = "SELECT Name from Largest_banks LIMIT 5"  # Print only the names of the top 5 banks
 
 
 def log_progress(message):
@@ -76,6 +83,9 @@ def load_to_db(df, sql_connection, table_name):
 def run_query(query_statement, sql_connection):
     ''' This function runs the query on the database table and
     prints the output on the terminal. Function returns nothing. '''
+    query_output = pd.read_sql(query_statement, sql_connection)
+    print(query_statement)
+    print(query_output)
 
 
 ''' Here, you define the required entities and call the relevant
@@ -93,8 +103,9 @@ conn = sqlite3.connect(db_name)
 log_progress('SQL Connection initiated')
 load_to_db(df, conn, table_name)
 log_progress('Data loaded to Database as a table, Executing queries')
-# query = ""
-# run_query(query, conn)
-# log_progress('Process Complete')
-# conn.close()
-# log_progress('Server Connection closed')
+run_query(query_1, conn)
+run_query(query_2, conn)
+run_query(query_3, conn)
+log_progress('Process Complete')
+conn.close()
+log_progress('Server Connection closed')
