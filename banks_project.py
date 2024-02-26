@@ -3,6 +3,7 @@
 # Importing the required libraries
 import requests
 import sqlite3
+import csv
 import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
@@ -40,7 +41,7 @@ def extract(url, table_attribs):
         if len(col) != 0:  # Ensure there is a column
             name = col[1].text.strip()  # Access the bank name from the second column
             billion_dollars = col[2].text.strip()  # Access the billion-dollar value from the third column
-            data_dict = {"Name": name, "MC_USD_Billion": billion_dollars}
+            data_dict = {"Name": name, "MC_USD_Billion": float(billion_dollars)}
             df1 = pd.DataFrame(data_dict, index=[0])
             df = pd.concat([df, df1], ignore_index=True)
     return df
@@ -51,7 +52,11 @@ def transform(df, csv_path):
     information, and adds three columns to the data frame, each
     containing the transformed version of Market Cap column to
     respective currencies'''
-
+    conversion_data = pd.read_csv(csv_path)
+    exchange_rate = conversion_data.set_index('Currency').to_dict()['Rate']
+    df['MC_GBP_Billion'] = [np.round(x * exchange_rate['GBP'], 2) for x in df['MC_USD_Billion']]
+    df['MC_EUR_Billion '] = [np.round(x * exchange_rate['EUR'], 2) for x in df['MC_USD_Billion']]
+    df['MC_INR_Billion'] = [np.round(x * exchange_rate['INR'], 2) for x in df['MC_USD_Billion']]
     return df
 
 
@@ -77,6 +82,8 @@ portion is not inside any function.'''
 log_progress('Preliminaries complete. Initiating ETL process')
 df = extract(url, table_attribs)
 log_progress('Data extraction complete. Initiating Transformation process')
+transform(df, 'exchange_rate.csv')
+
 # log_progress('Data transformation complete. Initiating Loading process')
 # log_progress('Data saved to CSV file')
 # log_progress('SQL Connection initiated')
