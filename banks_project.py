@@ -57,14 +57,14 @@ def transform(df, csv_path):
     df['MC_GBP_Billion'] = [np.round(x * exchange_rate['GBP'], 2) for x in df['MC_USD_Billion']]
     df['MC_EUR_Billion'] = [np.round(x * exchange_rate['EUR'], 2) for x in df['MC_USD_Billion']]
     df['MC_INR_Billion'] = [np.round(x * exchange_rate['INR'], 2) for x in df['MC_USD_Billion']]
-    # print(df)
+    # print(df)clear
     return df
 
 
 def load_to_csv(df, output_path):
     ''' This function saves the final data frame as a CSV file in
     the provided path. Function returns nothing.'''
-
+    df.to_csv(output_path)
 
 def load_to_db(df, sql_connection, table_name):
     ''' This function saves the final data frame to a database
@@ -85,7 +85,8 @@ df = extract(url, table_attribs)
 log_progress('Data extraction complete. Initiating Transformation process')
 transform(df, 'exchange_rate.csv')
 log_progress('Data transformation complete. Initiating Loading process')
-# log_progress('Data saved to CSV file')
+load_to_csv(df, output_csv_path)
+log_progress('Data saved to CSV file')
 
 # log_progress('SQL Connection initiated')
 
