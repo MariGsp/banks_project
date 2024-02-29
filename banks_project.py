@@ -1,27 +1,31 @@
-# Code for ETL operations on Country-GDP data
-
-# Importing the required libraries
-import requests
+"""
+Code for ETL operations on Country-GDP data
+"""
+from datetime import datetime
 import sqlite3
-import csv
 import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
-from datetime import datetime
+import requests
 
 # Initialised items
-log_file = 'code_log.txt'
-url = 'https://web.archive.org/web/20230908091635/https://en.wikipedia.org/wiki/List_of_largest_banks'
-table_attribs = ["Name", "MC_USD_Billion"]
-output_csv_path = './Largest_banks_data.csv'
-db_name = 'Banks.db'
-table_name = 'Largest_banks'
+LOG_FILE = 'code_log.txt'
+URL = ('https://web.archive.org/web/20230908091635/'
+       'https://en.wikipedia.org/wiki/List_of_largest_banks')
+TABLE_ATTRIBS = ["Name", "MC_USD_Billion"]
+OUTPUT_CSV_PATH = './Largest_banks_data.csv'
+DB_NAME = 'Banks.db'
+TABLE_NAME = 'Largest_banks'
 
 # SQL queries
-query_1 = "SELECT * FROM Largest_banks"  # Print the contents of the entire table
-query_2 = "SELECT AVG(MC_GBP_Billion) FROM Largest_banks"  # Print the average market capitalization of all the banks
+
+# Print the contents of the entire table
+QUERY_1 = "SELECT * FROM Largest_banks"
+
+# Print the average market capitalization of all the banks
+QUERY_2 = "SELECT AVG(MC_GBP_Billion) FROM Largest_banks"
 # in Billion USD.
-query_3 = "SELECT Name from Largest_banks LIMIT 5"  # Print only the names of the top 5 banks
+QUERY_3 = "SELECT Name from Largest_banks LIMIT 5"  # Print only the names of the top 5 banks
 
 
 def log_progress(message):
@@ -30,7 +34,7 @@ def log_progress(message):
     timestamp_format = '%Y-%m-%d-%H:%M:%S'
     now = datetime.now()
     timestamp = now.strftime(timestamp_format)
-    with open(log_file, 'a') as f:
+    with open(LOG_FILE, 'a') as f:
         f.write(timestamp + ': ' + message + '\n')
 
 
@@ -45,9 +49,9 @@ def extract(url, table_attribs):
     rows = tables[0].find_all('tr')
     for row in rows:
         col = row.find_all('td')
-        if len(col) != 0:  # Ensure there is a column
-            name = col[1].text.strip()  # Access the bank name from the second column
-            billion_dollars = col[2].text.strip()  # Access the billion-dollar value from the third column
+        if len(col) != 0:
+            name = col[1].text.strip()
+            billion_dollars = col[2].text.strip()
             data_dict = {"Name": name, "MC_USD_Billion": float(billion_dollars)}
             df1 = pd.DataFrame(data_dict, index=[0])
             df = pd.concat([df, df1], ignore_index=True)
@@ -93,19 +97,19 @@ functions in the correct order to complete the project. Note that this
 portion is not inside any function.'''
 
 log_progress('Preliminaries complete. Initiating ETL process')
-df = extract(url, table_attribs)
+dataframe = extract(URL, TABLE_ATTRIBS)
 log_progress('Data extraction complete. Initiating Transformation process')
-transform(df, 'exchange_rate.csv')
+transform(dataframe, 'exchange_rate.csv')
 log_progress('Data transformation complete. Initiating Loading process')
-load_to_csv(df, output_csv_path)
+load_to_csv(dataframe, OUTPUT_CSV_PATH)
 log_progress('Data saved to CSV file')
-conn = sqlite3.connect(db_name)
+conn = sqlite3.connect(DB_NAME)
 log_progress('SQL Connection initiated')
-load_to_db(df, conn, table_name)
+load_to_db(dataframe, conn, TABLE_NAME)
 log_progress('Data loaded to Database as a table, Executing queries')
-run_query(query_1, conn)
-run_query(query_2, conn)
-run_query(query_3, conn)
+run_query(QUERY_1, conn)
+run_query(QUERY_2, conn)
+run_query(QUERY_3, conn)
 log_progress('Process Complete')
 conn.close()
 log_progress('Server Connection closed')
