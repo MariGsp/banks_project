@@ -17,11 +17,8 @@ OUTPUT_CSV_PATH = './Largest_banks_data.csv'
 DB_NAME = 'Banks.db'
 TABLE_NAME = 'Largest_banks'
 
-# SQL queries
-
 # Print the contents of the entire table
 QUERY_1 = "SELECT * FROM Largest_banks"
-
 # Print the average market capitalization of all the banks
 QUERY_2 = "SELECT AVG(MC_GBP_Billion) FROM Largest_banks"
 # in Billion USD.
