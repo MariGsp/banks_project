@@ -7,3 +7,6 @@ Your boss has asked you to create a code that can be used to compile the list of
 Further, the data needs to be transformed and stored in GBP, EUR and INR as well, in accordance with the exchange rate information that has been made available to you as a CSV file. 
 The processed information table is to be saved locally in a CSV format and as a database table.
 Your job is to create an automated system to generate this information so that the same can be executed in every financial quarter to prepare the report.
+
+---
+![image](https://github.com/MariGsp/banks_project/assets/47831753/5a40dfed-d4c4-4e4b-9b94-7efb16752232)
